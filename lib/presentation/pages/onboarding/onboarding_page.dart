@@ -51,40 +51,47 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 ],
               ),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: SvgPicture.asset(
-                    '${AppStrings.iconPath}/ic_food_hub_logo.svg',
-                  ),
+            child: SingleChildScrollView(
+              child: SafeArea(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    SizedBox(height: AppSizes.dimen54.h),
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: SvgPicture.asset(
+                        '${AppStrings.iconPath}/ic_food_hub_logo.svg',
+                      ),
+                    ),
+                    SizedBox(height: AppSizes.dimen120.h),
+                    CommonText(
+                      text: 'Start\nCooking',
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
+                      style: textStyleW700S54.copyWith(color: AppColors.white),
+                    ),
+                    SizedBox(height: AppSizes.dimen8.h),
+                    CommonText(
+                      text: 'Find best recipes for cooking',
+                      style: textStyleW400S16.copyWith(color: AppColors.white),
+                    ),
+                    SizedBox(height: AppSizes.dimen48.h),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: AppSizes.dimen48.w,
+                      ),
+                      child: CommonButton(
+                        text: 'Get Started',
+                        textColor: AppColors.white,
+                        backgroundColor: AppColors.primaryColor,
+                        onPressed: () => _controller.navigateToHome(context),
+                      ),
+                    ),
+                    SizedBox(height: AppSizes.dimen54.h),
+                  ],
                 ),
-                SizedBox(height: AppSizes.dimen120.h),
-                CommonText(
-                  text: 'Start\nCooking',
-                  maxLines: 2,
-                  textAlign: TextAlign.center,
-                  style: textStyleW700S54.copyWith(color: AppColors.white),
-                ),
-                SizedBox(height: AppSizes.dimen8.h),
-                CommonText(
-                  text: 'Find best recipes for cooking',
-                  style: textStyleW400S16.copyWith(color: AppColors.white),
-                ),
-                SizedBox(height: AppSizes.dimen48.h),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: AppSizes.dimen48.w),
-                  child: CommonButton(
-                    text: 'Get Started',
-                    textColor: AppColors.white,
-                    backgroundColor: AppColors.primaryColor,
-                    onPressed: () => _controller.navigateToHome(context),
-                  ),
-                ),
-                SizedBox(height: AppSizes.dimen54.h),
-              ],
+              ),
             ),
           ),
         ],

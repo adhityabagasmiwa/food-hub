@@ -27,6 +27,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    Orientation orientation = MediaQuery.of(context).orientation;
+
     Widget trendingRecipesSection(BuildContext context) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,7 +42,9 @@ class _HomePageState extends State<HomePage> {
           ),
           SizedBox(height: AppSizes.dimen8.h),
           SizedBox(
-            height: AppSizes.size216.h,
+            height: orientation == Orientation.landscape
+                ? AppSizes.size300.h
+                : AppSizes.size216.h,
             child: ListView.builder(
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
@@ -126,7 +130,9 @@ class _HomePageState extends State<HomePage> {
                 crossAxisCount: 2,
                 crossAxisSpacing: AppSizes.dimen12.h,
                 mainAxisSpacing: AppSizes.dimen12.w,
-                mainAxisExtent: AppSizes.size180.h,
+                mainAxisExtent: orientation == Orientation.landscape
+                    ? AppSizes.size240.h
+                    : AppSizes.size180.h,
               ),
               itemCount: _controller.popularRecipes.length,
               itemBuilder: (newContext, index) {

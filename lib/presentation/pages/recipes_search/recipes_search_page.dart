@@ -37,6 +37,7 @@ class _RecipesSearchPageState extends State<RecipesSearchPage> {
   @override
   Widget build(BuildContext context) {
     FocusScopeNode currentFocus = FocusScope.of(context);
+    Orientation orientation = MediaQuery.of(context).orientation;
 
     Widget searchSection() {
       return SizedBox(
@@ -115,7 +116,9 @@ class _RecipesSearchPageState extends State<RecipesSearchPage> {
                             _controller.searchController.text = value;
                           });
 
-                          setHasSearched(_controller.searchController.text != '');
+                          setHasSearched(
+                            _controller.searchController.text != '',
+                          );
                         },
                         onClear: () {
                           setState(() {
@@ -139,7 +142,11 @@ class _RecipesSearchPageState extends State<RecipesSearchPage> {
               Visibility(
                 visible: _controller.recipes.isEmpty,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: AppSizes.dimen120.h),
+                  padding: EdgeInsets.symmetric(
+                    vertical: orientation == Orientation.landscape
+                        ? AppSizes.size24.h
+                        : AppSizes.dimen120.h,
+                  ),
                   child: searchSection(),
                 ),
               ),
@@ -156,7 +163,9 @@ class _RecipesSearchPageState extends State<RecipesSearchPage> {
                         crossAxisCount: 2,
                         crossAxisSpacing: AppSizes.dimen12.h,
                         mainAxisSpacing: AppSizes.dimen12.w,
-                        mainAxisExtent: AppSizes.size180.h,
+                        mainAxisExtent: orientation == Orientation.landscape
+                            ? AppSizes.size240.h
+                            : AppSizes.size180.h,
                       ),
                       itemCount: _controller.recipes.length,
                       itemBuilder: (newContext, index) {
