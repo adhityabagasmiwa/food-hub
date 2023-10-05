@@ -24,7 +24,8 @@ class AppSizes {
   static const size120 = 120.0;
   static const size150 = 150.0;
   static const size180 = 180.0;
-  static const size216 = 216.0;
+  static const size190 = 190.0;
+  static const size220 = 220.0;
   static const size240 = 240.0;
   static const size300 = 300.0;
   static const size360 = 360.0;

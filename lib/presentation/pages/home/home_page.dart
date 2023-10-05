@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
           SizedBox(
             height: orientation == Orientation.landscape
                 ? AppSizes.size300.h
-                : AppSizes.size216.h,
+                : AppSizes.size220.h,
             child: ListView.builder(
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
@@ -132,7 +132,7 @@ class _HomePageState extends State<HomePage> {
                 mainAxisSpacing: AppSizes.dimen12.w,
                 mainAxisExtent: orientation == Orientation.landscape
                     ? AppSizes.size240.h
-                    : AppSizes.size180.h,
+                    : AppSizes.size190.h,
               ),
               itemCount: _controller.popularRecipes.length,
               itemBuilder: (newContext, index) {

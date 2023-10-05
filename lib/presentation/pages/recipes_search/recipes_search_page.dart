@@ -165,7 +165,7 @@ class _RecipesSearchPageState extends State<RecipesSearchPage> {
                         mainAxisSpacing: AppSizes.dimen12.w,
                         mainAxisExtent: orientation == Orientation.landscape
                             ? AppSizes.size240.h
-                            : AppSizes.size180.h,
+                            : AppSizes.size190.h,
                       ),
                       itemCount: _controller.recipes.length,
                       itemBuilder: (newContext, index) {

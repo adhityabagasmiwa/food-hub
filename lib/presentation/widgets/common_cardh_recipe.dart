@@ -37,7 +37,6 @@ class CommonCardHorizontalRecipe extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Column(
-          mainAxisSize: MainAxisSize.max,
           children: [
             Stack(
               children: [
@@ -100,6 +99,7 @@ class CommonCardHorizontalRecipe extends StatelessWidget {
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   CommonText(
                     text: recipeData.name,
