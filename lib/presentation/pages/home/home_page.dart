@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:food_hub/presentation/base/base_view.dart';
@@ -38,24 +39,24 @@ class HomePage extends BasePage<HomeController> {
                   child: ListView.builder(
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
-                    itemCount: controller.trendingRecipes.length,
+                    itemCount: controller.trendingMeals.length,
                     itemBuilder: (newContext, index) {
-                      var recipeData = controller.trendingRecipes[index];
+                      var mealData = controller.trendingMeals[index];
 
                       return Padding(
                         padding: EdgeInsets.only(
                           left: index == 0
                               ? AppSizes.dimen24.w
                               : AppSizes.dimen8.w,
-                          right: index == controller.trendingRecipes.length - 1
+                          right: index == controller.trendingMeals.length - 1
                               ? AppSizes.dimen24.w
                               : AppSizes.dimen8.w,
                         ),
                         child: CommonCardHorizontalRecipe(
-                          recipeData: recipeData,
+                          mealData: mealData,
                           onTap: () {
                             controller.navigateToRecipeDetail(
-                              argument: recipeData,
+                              argument: mealData,
                             );
                           },
                         ),
@@ -68,22 +69,30 @@ class HomePage extends BasePage<HomeController> {
           }
 
           Widget popularRecipesSection(BuildContext context) {
-            return Padding(
-              padding: EdgeInsets.symmetric(horizontal: AppSizes.dimen24.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CommonText(
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: AppSizes.dimen24.w),
+                  child: CommonText(
                     text: 'Popular Category',
                     style: textStyleW600S18.copyWith(color: Colors.black),
                   ),
-                  SizedBox(height: AppSizes.dimen16.h),
-                  Wrap(
-                    spacing: 8,
-                    children: controller.categoryRecipes
-                        .map((e) => ChoiceChip(
+                ),
+                SizedBox(height: AppSizes.dimen16.h),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: AppSizes.dimen24.w,
+                    ),
+                    child: Wrap(
+                      spacing: 8,
+                      children: controller.categoryMeals
+                          .map(
+                            (e) => ChoiceChip(
                               label: CommonText(
-                                text: e.name,
+                                text: e.strCategory,
                                 style: textStyleW500S12,
                               ),
                               elevation: 0.75,
@@ -91,7 +100,8 @@ class HomePage extends BasePage<HomeController> {
                                   MaterialTapTargetSize.shrinkWrap,
                               backgroundColor: Colors.transparent,
                               labelStyle: TextStyle(
-                                color: controller.categoryIdSelected == e.id
+                                color: controller.categoryIdSelected ==
+                                        e.idCategory
                                     ? AppColors.white
                                     : AppColors.primaryColor,
                               ),
@@ -103,18 +113,24 @@ class HomePage extends BasePage<HomeController> {
                               side: BorderSide.none,
                               showCheckmark: false,
                               selectedColor: AppColors.primaryColor,
-                              selected: controller.categoryIdSelected == e.id,
+                              selected:
+                                  controller.categoryIdSelected == e.idCategory,
                               onSelected: (_) {
                                 controller.setSelectedCategory(
-                                  id: e.id,
-                                  category: e.name.toLowerCase(),
+                                  id: e.idCategory,
+                                  category: e.strCategory.toLowerCase(),
                                 );
                               },
-                            ))
-                        .toList(),
+                            ),
+                          )
+                          .toList(),
+                    ),
                   ),
-                  SizedBox(height: AppSizes.dimen16.h),
-                  GridView.builder(
+                ),
+                SizedBox(height: AppSizes.dimen16.h),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: AppSizes.dimen24.w),
+                  child: GridView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -132,15 +148,16 @@ class HomePage extends BasePage<HomeController> {
                       return CommonCardVerticalRecipe(
                         recipeData: recipeData,
                         onTap: () {
-                          controller.navigateToRecipeDetail(
-                            argument: recipeData,
-                          );
+                          // TODO
+                          // controller.navigateToRecipeDetail(
+                          //   argument: recipeData,
+                          // );
                         },
                       );
                     },
                   ),
-                ],
-              ),
+                ),
+              ],
             );
           }
 
@@ -199,9 +216,17 @@ class HomePage extends BasePage<HomeController> {
                               ),
                             ),
                             SizedBox(height: AppSizes.dimen24.h),
-                            trendingRecipesSection(context),
+                            controller.isLoading
+                                ? const Center(
+                                    child: CupertinoActivityIndicator(),
+                                  )
+                                : trendingRecipesSection(context),
                             SizedBox(height: AppSizes.dimen16.h),
-                            popularRecipesSection(context),
+                            controller.isLoading
+                                ? const Center(
+                                    child: CupertinoActivityIndicator(),
+                                  )
+                                : popularRecipesSection(context),
                             SizedBox(height: AppSizes.dimen16.h),
                           ],
                         ),

@@ -1,19 +1,21 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:food_hub/domain/recipe.dart';
+import 'package:food_hub/domain/meal.dart';
 import 'package:food_hub/presentation/misc/app_colors.dart';
 import 'package:food_hub/presentation/misc/app_sizes.dart';
 import 'package:food_hub/presentation/misc/app_strings.dart';
 import 'package:food_hub/presentation/misc/app_styles.dart';
 import 'package:food_hub/presentation/widgets/common_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class CommonCardHorizontalRecipe extends StatelessWidget {
-  final Recipe recipeData;
+  final Meal mealData;
   final Function() onTap;
 
   const CommonCardHorizontalRecipe({
     super.key,
-    required this.recipeData,
+    required this.mealData,
     required this.onTap,
   });
 
@@ -48,9 +50,18 @@ class CommonCardHorizontalRecipe extends StatelessWidget {
                       topLeft: Radius.circular(AppSizes.radius16),
                       topRight: Radius.circular(AppSizes.radius16),
                     ),
-                    child: Image.asset(
-                      '${AppStrings.imagePath}/${recipeData.photoUrl}',
+                    child: CachedNetworkImage(
+                      imageUrl: mealData.strMealThumb,
                       fit: BoxFit.cover,
+                      placeholder: (context, url) => SizedBox(
+                        width: AppSizes.dimen120.h,
+                        height: AppSizes.dimen120.h,
+                        child: const Center(
+                          child: CupertinoActivityIndicator(),
+                        ),
+                      ),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
                     ),
                   ),
                 ),
@@ -70,22 +81,11 @@ class CommonCardHorizontalRecipe extends StatelessWidget {
                         color: AppColors.white,
                         borderRadius: BorderRadius.circular(AppSizes.radius20),
                       ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          CommonText(
-                            text: recipeData.rating.toString(),
-                            style: textStyleW700S12.copyWith(
-                              color: Colors.black,
-                            ),
-                          ),
-                          SizedBox(width: AppSizes.dimen4.w),
-                          const Icon(
-                            Icons.star_rate_rounded,
-                            size: AppSizes.size16,
-                            color: AppColors.primaryColor,
-                          ),
-                        ],
+                      child: CommonText(
+                        text: mealData.strCategory,
+                        style: textStyleW700S12.copyWith(
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                   ),
@@ -102,7 +102,7 @@ class CommonCardHorizontalRecipe extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   CommonText(
-                    text: recipeData.name,
+                    text: mealData.strMeal,
                     maxLines: 2,
                     style: textStyleW700S16.copyWith(color: Colors.black),
                   ),
@@ -112,11 +112,11 @@ class CommonCardHorizontalRecipe extends StatelessWidget {
                       Container(
                         width: AppSizes.size24.w,
                         height: AppSizes.size24.h,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
                             image: AssetImage(
-                              '${AppStrings.iconPath}/${recipeData.creator.photoUrl}',
+                              '${AppStrings.iconPath}/ic_creator_1.png',
                             ),
                             fit: BoxFit.cover,
                           ),
@@ -124,7 +124,8 @@ class CommonCardHorizontalRecipe extends StatelessWidget {
                       ),
                       SizedBox(width: AppSizes.dimen8.w),
                       CommonText(
-                        text: recipeData.creator.name,
+                        // text: recipeData.creator.name,
+                        text: mealData.strArea,
                         style: textStyleW400S12.copyWith(color: Colors.black),
                       ),
                     ],

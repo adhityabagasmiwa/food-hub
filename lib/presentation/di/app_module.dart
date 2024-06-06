@@ -3,6 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:food_hub/data/dio_interceptor.dart';
 import 'package:food_hub/data/endpoints.dart';
+import 'package:food_hub/data/service/api_service.dart';
+import 'package:food_hub/data/service/api_service_impl.dart';
 import 'package:food_hub/presentation/di/controller_module.dart';
 import 'package:food_hub/presentation/di/presenter_module.dart';
 import 'package:food_hub/presentation/di/repository_module.dart';
@@ -29,6 +31,7 @@ class AppModule {
 
       return dio;
     });
+    di.registerFactory<ApiService>(() => ApiServiceImpl(di.get()));
   }
 
   static Future<void> registerAllModules() async {
