@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 
 abstract class BaseController extends ChangeNotifier
     with WidgetsBindingObserver {
-  BaseController();
+  BaseController() {
+    _isMounted = true;
+    initListeners();
+  }
 
   late bool _isMounted = false;
   late GlobalKey<State<StatefulWidget>> _globalKey;

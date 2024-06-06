@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:food_hub/domain/recipe.dart';
+import 'package:food_hub/presentation/base/base_controller.dart';
 import 'package:food_hub/presentation/pages/recipes_detail/recipes_detail_page.dart';
 import 'package:food_hub/presentation/pages/recipes_search/recipes_search_page.dart';
 
-class HomeController {
+class HomeController extends BaseController {
   final SearchController _searchController = SearchController();
   SearchController get searchController => _searchController;
 
@@ -22,6 +23,7 @@ class HomeController {
   void setSelectedCategory({required int id, required String category}) {
     _categoryIdSelected = id;
     setFilterPopularRecipes(category);
+    refreshUI();
   }
 
   void setFilterPopularRecipes(String category) {
@@ -33,24 +35,18 @@ class HomeController {
               element.category.name.toLowerCase() == category.toLowerCase())
           .toList();
     }
+    refreshUI();
   }
 
-  void navigateToRecipeDetail({
-    required BuildContext context,
-    required Recipe argument,
-  }) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => RecipesDetailPage(argument: argument),
-      ),
+  void navigateToRecipeDetail({required Recipe argument}) {
+    Navigator.pushNamed(
+      context,
+      RecipesDetailPage.route,
+      arguments: argument,
     );
   }
 
-  void navigateToRecipeSearch(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const RecipesSearchPage(),
-      ),
-    );
+  void navigateToRecipeSearch() {
+    Navigator.pushNamed(context, RecipesSearchPage.route);
   }
 }

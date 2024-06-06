@@ -1,22 +1,25 @@
-import 'dart:async';
+import 'dart:async' as dart;
 
 import 'package:flutter/material.dart';
+import 'package:food_hub/presentation/base/base_controller.dart';
 import 'package:food_hub/presentation/pages/onboarding/onboarding_page.dart';
 
-class SplashScreenController {
-  Timer startSplashScreen(BuildContext context) {
+class SplashScreenController extends BaseController {
+  @override
+  void initListeners() {
+    super.initListeners();
+    _startSplashScreen();
+  }
+
+  dart.Timer _startSplashScreen() {
     var duration = const Duration(seconds: 2);
 
-    return Timer(duration, () {
-      _navigateToOnboard(context);
+    return dart.Timer(duration, () {
+      _navigateToOnboard();
     });
   }
 
-  void _navigateToOnboard(BuildContext context) {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => const OnboardingPage(),
-      ),
-    );
+  void _navigateToOnboard() {
+    Navigator.pushReplacementNamed(context, OnboardingPage.route);
   }
 }
