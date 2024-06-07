@@ -4,4 +4,5 @@ import 'package:food_hub/domain/meal.dart';
 abstract class MealRepository {
   Future<List<Meal>> getTrendingMeals(String query);
   Future<List<CategoryMeal>> getCategoryMeals(Map<String, dynamic> params);
+  Future<Meal> getDetailMeal(String id);
 }

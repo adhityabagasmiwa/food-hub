@@ -12,7 +12,7 @@ class ControllerModule {
     di.registerFactory(() => SplashScreenController());
     di.registerFactory(() => OnboardingController());
     di.registerFactory(() => HomeController(di.get()));
-    di.registerFactory(() => RecipesDetailController());
+    di.registerFactory(() => RecipesDetailController(di.get()));
     di.registerFactory(() => RecipeSearchController());
   }
 }

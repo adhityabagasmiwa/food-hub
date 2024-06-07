@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:food_hub/domain/recipe.dart';
 import 'package:food_hub/presentation/pages/home/home_page.dart';
 import 'package:food_hub/presentation/pages/onboarding/onboarding_page.dart';
 import 'package:food_hub/presentation/pages/recipes_detail/recipes_detail_page.dart';
@@ -27,10 +26,10 @@ class Router {
       case RecipesSearchPage.route:
         return _buildRoute(settings, RecipesSearchPage(controller: di.get()));
       case RecipesDetailPage.route:
-        var recipe = settings?.arguments as Recipe;
+        var mealId = settings?.arguments as String;
         return _buildRoute(
           settings,
-          RecipesDetailPage(controller: di.get(), argument: recipe),
+          RecipesDetailPage(controller: di.get(), mealId: mealId),
         );
       default:
         return null;
@@ -53,7 +52,7 @@ class Router {
           },
         );
       },
-      transitionDuration: const Duration(milliseconds: 300),
+      transitionDuration: const Duration(milliseconds: 200),
     );
   }
 }

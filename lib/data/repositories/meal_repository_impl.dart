@@ -37,4 +37,19 @@ class MealRepositoryImpl extends MealRepository {
     var data = (response['categories'] ?? []) as List<dynamic>;
     return data.map((json) => CategoryMeal.fromJson(json)).toList();
   }
+
+  @override
+  Future<Meal> getDetailMeal(String id) async {
+    var queryParams = {'i': id};
+    var response = await _service.invokeHttp(
+      _endpoints.mealDetail,
+      RequestType.get,
+      params: queryParams,
+    );
+
+    var data = (response['meals'] ?? []) as List<dynamic>;
+    var list = data.map((json) => Meal.fromJson(json)).toList();
+    var result = list.first;
+    return result;
+  }
 }

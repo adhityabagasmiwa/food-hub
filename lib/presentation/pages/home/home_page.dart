@@ -56,7 +56,7 @@ class HomePage extends BasePage<HomeController> {
                           mealData: mealData,
                           onTap: () {
                             controller.navigateToRecipeDetail(
-                              argument: mealData,
+                              id: mealData.idMeal,
                             );
                           },
                         ),

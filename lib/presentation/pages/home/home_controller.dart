@@ -83,11 +83,11 @@ class HomeController extends BaseController {
     refreshUI();
   }
 
-  void navigateToRecipeDetail({required Meal argument}) {
+  void navigateToRecipeDetail({required String id}) {
     Navigator.pushNamed(
       context,
       RecipesDetailPage.route,
-      arguments: argument,
+      arguments: id,
     );
   }
 
