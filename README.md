@@ -1,16 +1,9 @@
-# food_hub
+# Food Recipe
 
-A new Flutter project.
+Sample App Food Recipe Using Simple Mini Clean Architecture Combine Provider State Management
 
-## Getting Started
+| **Splash Screen**                                                                                                                                                                                             | **Onboard Screen**                                                                                                                                                                                         | **Home Screen**                                                                                                                                                                                               | **Detail Screen**                                                                                                                                                                                             | **Search Screen**                                                                                                                                                                                             |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| ![https://github.com/adhityabagasmiwa/food_hub/assets/33971466/aceacf9f-af6e-46ad-98bc-f427fd2b1065](https://github.com/adhityabagasmiwa/food_hub/assets/33971466/aceacf9f-af6e-46ad-98bc-f427fd2b1065) | ![https://github.com/adhityabagasmiwa/food_hub/assets/33971466/536f8788-d4c0-4232-9d84-a1944766c5c0](https://github.com/adhityabagasmiwa/food_hub/assets/33971466/536f8788-d4c0-4232-9d84-a1944766c5c0) | ![https://github.com/adhityabagasmiwa/food_hub/assets/33971466/6ede6706-3b8c-4ddc-9ae2-48e7f581f8b4](https://github.com/adhityabagasmiwa/food_hub/assets/33971466/6ede6706-3b8c-4ddc-9ae2-48e7f581f8b4) | ![https://github.com/adhityabagasmiwa/food_hub/assets/33971466/afb2131d-16b2-4517-b97f-61e1acd0d1ea](https://github.com/adhityabagasmiwa/food_hub/assets/33971466/afb2131d-16b2-4517-b97f-61e1acd0d1ea) | ![https://github.com/adhityabagasmiwa/food_hub/assets/33971466/228b70a0-053f-44be-9965-9b326b84e394](https://github.com/adhityabagasmiwa/food_hub/assets/33971466/228b70a0-053f-44be-9965-9b326b84e394) |
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
