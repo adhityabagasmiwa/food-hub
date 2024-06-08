@@ -1,5 +1,6 @@
 import 'package:food_hub/presentation/pages/home/home_presenter.dart';
 import 'package:food_hub/presentation/pages/recipes_detail/recipes_detail_presenter.dart';
+import 'package:food_hub/presentation/pages/recipes_search/recipes_search_presenter.dart';
 import 'package:get_it/get_it.dart';
 
 class PresenterModule {
@@ -14,5 +15,6 @@ class PresenterModule {
       ),
     );
     di.registerFactory(() => RecipesDetailPresenter(di.get()));
+    di.registerFactory(() => RecipesSearchPresenter(di.get()));
   }
 }

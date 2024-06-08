@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:food_hub/presentation/base/base_view.dart';
@@ -60,8 +61,9 @@ class RecipesSearchPage extends BasePage<RecipeSearchController> {
                 child: Column(
                   children: [
                     Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: AppSizes.dimen20.w),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: AppSizes.dimen20.w,
+                      ),
                       child: Row(
                         children: [
                           Visibility(
@@ -79,8 +81,7 @@ class RecipesSearchPage extends BasePage<RecipeSearchController> {
                                 ),
                                 iconSize: AppSizes.size16,
                                 color: Colors.black,
-                                onPressed: () =>
-                                    controller.navigatePop(context),
+                                onPressed: controller.navigatePop,
                               ),
                             ),
                           ),
@@ -119,53 +120,59 @@ class RecipesSearchPage extends BasePage<RecipeSearchController> {
                       ),
                     ),
                     SizedBox(height: AppSizes.dimen16.h),
-                    Visibility(
-                      visible: controller.recipes.isEmpty,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: orientation == Orientation.landscape
-                              ? AppSizes.size24.h
-                              : AppSizes.dimen120.h,
-                        ),
-                        child: searchSection(),
-                      ),
-                    ),
-                    // Visibility(
-                    //   visible: controller.recipes.isNotEmpty,
-                    //   child: Expanded(
-                    //     child: Padding(
-                    //       padding: EdgeInsets.symmetric(
-                    //         horizontal: AppSizes.dimen24.w,
-                    //       ),
-                    //       child: GridView.builder(
-                    //         shrinkWrap: true,
-                    //         gridDelegate:
-                    //             SliverGridDelegateWithFixedCrossAxisCount(
-                    //           crossAxisCount: 2,
-                    //           crossAxisSpacing: AppSizes.dimen12.h,
-                    //           mainAxisSpacing: AppSizes.dimen12.w,
-                    //           mainAxisExtent:
-                    //               orientation == Orientation.landscape
-                    //                   ? AppSizes.size240.h
-                    //                   : AppSizes.size190.h,
-                    //         ),
-                    //         itemCount: controller.recipes.length,
-                    //         itemBuilder: (newContext, index) {
-                    //           var recipeData = controller.recipes[index];
+                    controller.isLoading
+                        ? const SizedBox()
+                        : Visibility(
+                            visible: controller.meals.isEmpty,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                vertical: orientation == Orientation.landscape
+                                    ? AppSizes.size24.h
+                                    : AppSizes.dimen120.h,
+                              ),
+                              child: searchSection(),
+                            ),
+                          ),
+                    controller.isLoading
+                        ? const Center(
+                            child: CupertinoActivityIndicator(),
+                          )
+                        : Visibility(
+                            visible: controller.meals.isNotEmpty,
+                            child: Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: AppSizes.dimen24.w,
+                                ),
+                                child: GridView.builder(
+                                  shrinkWrap: true,
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    crossAxisSpacing: AppSizes.dimen12.h,
+                                    mainAxisSpacing: AppSizes.dimen12.w,
+                                    mainAxisExtent:
+                                        orientation == Orientation.landscape
+                                            ? AppSizes.size240.h
+                                            : AppSizes.size190.h,
+                                  ),
+                                  itemCount: controller.meals.length,
+                                  itemBuilder: (newContext, index) {
+                                    var mealData = controller.meals[index];
 
-                    //           return CommonCardVerticalRecipe(
-                    //             recipeData: recipeData,
-                    //             onTap: () {
-                    //               controller.navigateToRecipeDetail(
-                    //                 argument: recipeData,
-                    //               );
-                    //             },
-                    //           );
-                    //         },
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
+                                    return CommonCardVerticalRecipe(
+                                      mealData: mealData,
+                                      onTap: () {
+                                        controller.navigateToRecipeDetail(
+                                          id: mealData.idMeal,
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
                   ],
                 ),
               ),

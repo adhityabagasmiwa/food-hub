@@ -13,6 +13,6 @@ class ControllerModule {
     di.registerFactory(() => OnboardingController());
     di.registerFactory(() => HomeController(di.get()));
     di.registerFactory(() => RecipesDetailController(di.get()));
-    di.registerFactory(() => RecipeSearchController());
+    di.registerFactory(() => RecipeSearchController(di.get()));
   }
 }
