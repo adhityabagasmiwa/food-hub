@@ -6,7 +6,13 @@ class PresenterModule {
   static void init() {
     var di = GetIt.I;
 
-    di.registerFactory(() => HomePresenter(di.get(), di.get()));
+    di.registerFactory(
+      () => HomePresenter(
+        di.get(),
+        di.get(),
+        di.get(),
+      ),
+    );
     di.registerFactory(() => RecipesDetailPresenter(di.get()));
   }
 }

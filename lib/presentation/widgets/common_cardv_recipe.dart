@@ -1,19 +1,20 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:food_hub/domain/recipe.dart';
+import 'package:food_hub/domain/meal.dart';
 import 'package:food_hub/presentation/misc/app_colors.dart';
 import 'package:food_hub/presentation/misc/app_sizes.dart';
-import 'package:food_hub/presentation/misc/app_strings.dart';
 import 'package:food_hub/presentation/misc/app_styles.dart';
 import 'package:food_hub/presentation/widgets/common_text.dart';
 
 class CommonCardVerticalRecipe extends StatelessWidget {
-  final Recipe recipeData;
+  final Meal mealData;
   final Function() onTap;
 
   const CommonCardVerticalRecipe({
     super.key,
-    required this.recipeData,
+    required this.mealData,
     required this.onTap,
   });
 
@@ -44,10 +45,17 @@ class CommonCardVerticalRecipe extends StatelessWidget {
                   topLeft: Radius.circular(AppSizes.radius16),
                   topRight: Radius.circular(AppSizes.radius16),
                 ),
-                child: Image.asset(
-                  '${AppStrings.imagePath}/${recipeData.photoUrl}',
+                child: CachedNetworkImage(
+                  imageUrl: mealData.strMealThumb,
                   fit: BoxFit.cover,
-                  height: AppSizes.size120.h,
+                  placeholder: (context, url) => SizedBox(
+                    width: AppSizes.dimen120.h,
+                    height: AppSizes.dimen120.h,
+                    child: const Center(
+                      child: CupertinoActivityIndicator(),
+                    ),
+                  ),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
             ),
@@ -60,11 +68,11 @@ class CommonCardVerticalRecipe extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CommonText(
-                    text: recipeData.name,
+                    text: mealData.strMeal,
                     style: textStyleW700S14.copyWith(color: Colors.black),
                   ),
                   CommonText(
-                    text: recipeData.category.name,
+                    text: mealData.strCategory,
                     style: textStyleW400S10.copyWith(color: Colors.black),
                   ),
                 ],

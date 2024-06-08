@@ -5,4 +5,5 @@ abstract class MealRepository {
   Future<List<Meal>> getTrendingMeals(String query);
   Future<List<CategoryMeal>> getCategoryMeals(Map<String, dynamic> params);
   Future<Meal> getDetailMeal(String id);
+  Future<List<Meal>> getPopularMeals(String query);
 }

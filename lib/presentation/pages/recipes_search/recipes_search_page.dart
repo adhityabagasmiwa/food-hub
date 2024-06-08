@@ -130,42 +130,42 @@ class RecipesSearchPage extends BasePage<RecipeSearchController> {
                         child: searchSection(),
                       ),
                     ),
-                    Visibility(
-                      visible: controller.recipes.isNotEmpty,
-                      child: Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: AppSizes.dimen24.w,
-                          ),
-                          child: GridView.builder(
-                            shrinkWrap: true,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: AppSizes.dimen12.h,
-                              mainAxisSpacing: AppSizes.dimen12.w,
-                              mainAxisExtent:
-                                  orientation == Orientation.landscape
-                                      ? AppSizes.size240.h
-                                      : AppSizes.size190.h,
-                            ),
-                            itemCount: controller.recipes.length,
-                            itemBuilder: (newContext, index) {
-                              var recipeData = controller.recipes[index];
+                    // Visibility(
+                    //   visible: controller.recipes.isNotEmpty,
+                    //   child: Expanded(
+                    //     child: Padding(
+                    //       padding: EdgeInsets.symmetric(
+                    //         horizontal: AppSizes.dimen24.w,
+                    //       ),
+                    //       child: GridView.builder(
+                    //         shrinkWrap: true,
+                    //         gridDelegate:
+                    //             SliverGridDelegateWithFixedCrossAxisCount(
+                    //           crossAxisCount: 2,
+                    //           crossAxisSpacing: AppSizes.dimen12.h,
+                    //           mainAxisSpacing: AppSizes.dimen12.w,
+                    //           mainAxisExtent:
+                    //               orientation == Orientation.landscape
+                    //                   ? AppSizes.size240.h
+                    //                   : AppSizes.size190.h,
+                    //         ),
+                    //         itemCount: controller.recipes.length,
+                    //         itemBuilder: (newContext, index) {
+                    //           var recipeData = controller.recipes[index];
 
-                              return CommonCardVerticalRecipe(
-                                recipeData: recipeData,
-                                onTap: () {
-                                  controller.navigateToRecipeDetail(
-                                    argument: recipeData,
-                                  );
-                                },
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                    ),
+                    //           return CommonCardVerticalRecipe(
+                    //             recipeData: recipeData,
+                    //             onTap: () {
+                    //               controller.navigateToRecipeDetail(
+                    //                 argument: recipeData,
+                    //               );
+                    //             },
+                    //           );
+                    //         },
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

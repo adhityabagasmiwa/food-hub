@@ -128,35 +128,40 @@ class HomePage extends BasePage<HomeController> {
                   ),
                 ),
                 SizedBox(height: AppSizes.dimen16.h),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: AppSizes.dimen24.w),
-                  child: GridView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: AppSizes.dimen12.h,
-                      mainAxisSpacing: AppSizes.dimen12.w,
-                      mainAxisExtent: orientation == Orientation.landscape
-                          ? AppSizes.size240.h
-                          : AppSizes.size190.h,
-                    ),
-                    itemCount: controller.popularRecipes.length,
-                    itemBuilder: (newContext, index) {
-                      var recipeData = controller.popularRecipes[index];
+                controller.isLoadingPopularMeals
+                    ? const Center(
+                        child: CupertinoActivityIndicator(),
+                      )
+                    : Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: AppSizes.dimen24.w),
+                        child: GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: AppSizes.dimen12.h,
+                            mainAxisSpacing: AppSizes.dimen12.w,
+                            mainAxisExtent: orientation == Orientation.landscape
+                                ? AppSizes.size240.h
+                                : AppSizes.size190.h,
+                          ),
+                          itemCount: controller.popularMeals.length,
+                          itemBuilder: (newContext, index) {
+                            var popularMeals = controller.popularMeals[index];
 
-                      return CommonCardVerticalRecipe(
-                        recipeData: recipeData,
-                        onTap: () {
-                          // TODO
-                          // controller.navigateToRecipeDetail(
-                          //   argument: recipeData,
-                          // );
-                        },
-                      );
-                    },
-                  ),
-                ),
+                            return CommonCardVerticalRecipe(
+                              mealData: popularMeals,
+                              onTap: () {
+                                controller.navigateToRecipeDetail(
+                                  id: popularMeals.idMeal,
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      ),
               ],
             );
           }
@@ -186,55 +191,51 @@ class HomePage extends BasePage<HomeController> {
             key: globalKey,
             backgroundColor: AppColors.white,
             body: SafeArea(
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  return CustomScrollView(
-                    slivers: [
-                      SliverToBoxAdapter(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(
-                                left: AppSizes.dimen24.w,
-                                top: AppSizes.dimen16.h,
-                                right: AppSizes.dimen24.w,
-                                bottom: AppSizes.dimen24.h,
-                              ),
-                              child: Text(
-                                'Find best recipes\nfor cooking',
-                                style: textStyleW700S24.copyWith(
-                                    color: Colors.black),
+              child: controller.isLoading
+                  ? const Center(
+                      child: CupertinoActivityIndicator(),
+                    )
+                  : LayoutBuilder(
+                      builder: (context, constraints) {
+                        return CustomScrollView(
+                          slivers: [
+                            SliverToBoxAdapter(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      left: AppSizes.dimen24.w,
+                                      top: AppSizes.dimen16.h,
+                                      right: AppSizes.dimen24.w,
+                                      bottom: AppSizes.dimen24.h,
+                                    ),
+                                    child: Text(
+                                      'Find best recipes\nfor cooking',
+                                      style: textStyleW700S24.copyWith(
+                                          color: Colors.black),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: AppSizes.dimen24.w,
+                                    ),
+                                    child: searchSection(
+                                      onTap: controller.navigateToRecipeSearch,
+                                    ),
+                                  ),
+                                  SizedBox(height: AppSizes.dimen24.h),
+                                  trendingRecipesSection(context),
+                                  SizedBox(height: AppSizes.dimen16.h),
+                                  popularRecipesSection(context),
+                                  SizedBox(height: AppSizes.dimen16.h),
+                                ],
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: AppSizes.dimen24.w,
-                              ),
-                              child: searchSection(
-                                onTap: controller.navigateToRecipeSearch,
-                              ),
-                            ),
-                            SizedBox(height: AppSizes.dimen24.h),
-                            controller.isLoading
-                                ? const Center(
-                                    child: CupertinoActivityIndicator(),
-                                  )
-                                : trendingRecipesSection(context),
-                            SizedBox(height: AppSizes.dimen16.h),
-                            controller.isLoading
-                                ? const Center(
-                                    child: CupertinoActivityIndicator(),
-                                  )
-                                : popularRecipesSection(context),
-                            SizedBox(height: AppSizes.dimen16.h),
                           ],
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              ),
+                        );
+                      },
+                    ),
             ),
           );
         },

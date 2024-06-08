@@ -119,7 +119,7 @@ class RecipesDetailPage extends BasePage<RecipesDetailController> {
                   SizedBox(height: AppSizes.dimen8.h),
                   CommonText(
                     text: controller.meal.strInstructions,
-                    maxLines: 10,
+                    maxLines: 100,
                     style: textStyleW500S14.copyWith(
                       color: AppColors.textColor,
                     ),
@@ -277,7 +277,8 @@ class RecipesDetailPage extends BasePage<RecipesDetailController> {
                       SafeArea(
                         child: Padding(
                           padding: EdgeInsets.symmetric(
-                              horizontal: AppSizes.dimen20.w),
+                            horizontal: AppSizes.dimen20.w,
+                          ),
                           child: AppBar(
                             backgroundColor: Colors.transparent,
                             leadingWidth: AppSizes.size36.w,

@@ -15,13 +15,13 @@ class RecipesDetailController extends BaseController {
   late Meal _meal;
   Meal get meal => _meal;
 
-  double _topPositionScrollSize = 220.h;
+  double _topPositionScrollSize = 180.h;
   double get topPositionScrollSize => _topPositionScrollSize;
 
   @override
   void initListeners() {
     super.initListeners();
-    // _scrollController.addListener(_scrollListener);
+    _scrollController.addListener(_scrollListener);
 
     _initObserver();
   }
@@ -29,8 +29,8 @@ class RecipesDetailController extends BaseController {
   @override
   void dispose() {
     super.dispose();
-    // _scrollController.dispose();
-    // _scrollController.removeListener(_scrollListener);
+    _scrollController.dispose();
+    _scrollController.removeListener(_scrollListener);
   }
 
   void _initObserver() {
@@ -41,16 +41,20 @@ class RecipesDetailController extends BaseController {
     _presenter.onError = (e) {};
   }
 
-  // void _scrollListener() {
-  //   if (_scrollController.offset <=
-  //           _scrollController.position.minScrollExtent &&
-  //       !_scrollController.position.outOfRange) {
-  //     _topPositionScrollSize = 220.h;
-  //   } else {
-  //     _topPositionScrollSize = 0;
-  //   }
-  //   refreshUI();
-  // }
+  void _scrollListener() {
+    double maxScrollExtent = _scrollController.position.maxScrollExtent;
+    double minScrollExtent = _scrollController.position.minScrollExtent;
+    double currentOffset = _scrollController.offset;
+    bool canScroll = maxScrollExtent - minScrollExtent > 0;
+
+    if (canScroll) {
+      double dynamicValue = (1 - (currentOffset / maxScrollExtent)) * 180.h;
+      _topPositionScrollSize = dynamicValue.clamp(0.0, 180.h);
+    } else {
+      _topPositionScrollSize = 180.h;
+    }
+    refreshUI();
+  }
 
   void getDetailMeal(String id) {
     showLoading();

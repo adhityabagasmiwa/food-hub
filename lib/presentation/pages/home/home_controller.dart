@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_hub/domain/category_meal.dart';
 import 'package:food_hub/domain/meal.dart';
-import 'package:food_hub/domain/recipe.dart';
 import 'package:food_hub/presentation/base/base_controller.dart';
 import 'package:food_hub/presentation/pages/home/home_presenter.dart';
 import 'package:food_hub/presentation/pages/recipes_detail/recipes_detail_page.dart';
@@ -18,14 +17,19 @@ class HomeController extends BaseController {
   final List<Meal> _trendingMeals = [];
   List<Meal> get trendingMeals => _trendingMeals;
 
-  List<Recipe> _popularRecipes = Recipe.popularRecipes;
-  List<Recipe> get popularRecipes => _popularRecipes;
+  List<Meal> _popularMeals = [];
+  List<Meal> get popularMeals => _popularMeals;
 
   final List<CategoryMeal> _categoryMeals = [];
   List<CategoryMeal> get categoryMeals => _categoryMeals;
 
   String _categoryIdSelected = '0';
   String get categoryIdSelected => _categoryIdSelected;
+
+  bool _isLoadingPopularMeals = false;
+  bool get isLoadingPopularMeals => _isLoadingPopularMeals;
+
+  String _categorySelected = '';
 
   @override
   void initListeners() {
@@ -47,9 +51,21 @@ class HomeController extends BaseController {
     _presenter.onSuccessGetCategoryMeals = (data) {
       _categoryMeals.clear();
       _categoryMeals.addAll(data);
+      _categoryIdSelected = data.first.idCategory;
+      _categorySelected = data.first.strCategory;
     };
-    _presenter.onComplete = hideLoading;
+    _presenter.onCompleteGetCategoryMeals = getPopularMeals;
     _presenter.onErrorGetCategoryMeals = (error) {};
+
+    _presenter.onSuccessGetPopularMeals = (data) {
+      _popularMeals.clear();
+      _popularMeals.addAll(data);
+    };
+    _presenter.onCompleteGetPopularMeals = () {
+      hideLoadingPopularMeal();
+      setFilterPopularRecipes(_categorySelected);
+    };
+    _presenter.onErrorGetPopularMeals = (error) {};
   }
 
   void _getTrendingMeals() {
@@ -62,24 +78,35 @@ class HomeController extends BaseController {
     _presenter.onGetCategoryMeals(<String, dynamic>{});
   }
 
+  void showLoadingPopularMeal() {
+    _isLoadingPopularMeals = true;
+  }
+
+  void hideLoadingPopularMeal() {
+    _isLoadingPopularMeals = false;
+  }
+
+  void getPopularMeals() {
+    showLoadingPopularMeal();
+    _presenter.onGetPopularMeals('');
+  }
+
   void setSelectedCategory({
     required String id,
     required String category,
   }) {
     _categoryIdSelected = id;
+    _categorySelected = category;
     setFilterPopularRecipes(category);
+    getPopularMeals();
     refreshUI();
   }
 
   void setFilterPopularRecipes(String category) {
-    _popularRecipes = Recipe.popularRecipes;
-
-    if (category != 'all') {
-      _popularRecipes = _popularRecipes
-          .where((element) =>
-              element.category.name.toLowerCase() == category.toLowerCase())
-          .toList();
-    }
+    _popularMeals = _popularMeals
+        .where((element) =>
+            element.strCategory.toLowerCase() == category.toLowerCase())
+        .toList();
     refreshUI();
   }
 
